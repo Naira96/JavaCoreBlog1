@@ -1,5 +1,4 @@
-package homework.adPortal;
-
+package homework.adPortal1;
 
 import java.util.Date;
 
@@ -11,17 +10,6 @@ public class Advertisement {
     private String category;
     private User author;
 
-    public Advertisement(String title, String text, String price, Date date, String category, User author) {
-        this.title = title;
-        this.text = text;
-        this.price = price;
-        this.date = date;
-        this.category = category;
-        this.author = author;
-    }
-
-    public Advertisement() {
-    }
 
     public String getTitle() {
         return title;

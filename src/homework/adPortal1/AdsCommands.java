@@ -1,4 +1,4 @@
-package homework.adPortal;
+package homework.adPortal1;
 
 public interface AdsCommands {
     String LOGOUT = "0";

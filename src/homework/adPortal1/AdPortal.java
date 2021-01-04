@@ -1,10 +1,13 @@
-package homework.adPortal;
+package homework.adPortal1;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
-public class AdPortal implements AdsCommands, EntryCommands {
+public class AdPortal implements EntryCommands {
     static Scanner scanner = new Scanner(System.in);
     static Map<String, User> userMap = new HashMap<>();
+
     public static void main(String[] args) {
         showEntryCommands();
         Boolean isRun = true;
@@ -15,7 +18,7 @@ public class AdPortal implements AdsCommands, EntryCommands {
                     System.exit(0);
                     break;
                 case LOGIN:
-                   login();
+                    login();
                     break;
                 case REGISTER:
                     register();
@@ -43,44 +46,39 @@ public class AdPortal implements AdsCommands, EntryCommands {
         System.out.println("Please input your password and phoneNumber");
         String password = scanner.nextLine();
         String phoneNumber = scanner.nextLine();
-        userMap.getOrDefault(phoneNumber,)
+//        Set<String> strings = userMap;
+//        for (String string : strings){
+//            if (phoneNumber.equals(userMap.get(string) && password.equals(userMap.)){
+//
+//            }
+//        }
     }
 
     private static void register() {
-
-        System.out.println("Input name, surname, gender, age,");
-
-        String name = scanner.nextLine();
-        System.out.println("Input surname");
-        String surname = scanner.nextLine();
-        String myGender;
+        System.out.println("Input name, surname, gender, age, phoneNumber, password");
+        String userData = scanner.nextLine();
+        String[] myUserData = userData.split(",");
         try {
-            System.out.println("Choose your gender");
-            for (Gender gender : Gender.values())
-                System.out.println(gender);
-            myGender = scanner.nextLine();
-            Gender.valueOf(myGender.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            System.out.println("Not exist");
-            System.out.println("Choose your gender from list");
-            for (Gender gender : Gender.values())
-                System.out.println(gender);
-            myGender = scanner.nextLine();
-        }
-        System.out.println("Input age");
-        int age;
-        try {
-            age = Integer.parseInt(scanner.nextLine());
+            String name = myUserData[0];
+            String surname = myUserData[1];
+            String gender = myUserData[2];
+            int age = Integer.parseInt(myUserData[3]);
+            String phoneNumber = myUserData[4];
+            String yourPassword = myUserData[5];
+            userMap.put(phoneNumber, new User(name, surname, Gender.valueOf(gender.toUpperCase()), age, phoneNumber, yourPassword));
+            System.out.println("You are registered");
         } catch (NumberFormatException e) {
-            System.out.println("invalid number");
-            System.out.println("Input again");
-            age = Integer.parseInt(scanner.nextLine());
+            System.out.println("Invalid number");
+            register();
+        } catch (IllegalArgumentException e) {
+            System.out.println("wrong gender,select from list");
+            for (Gender gender : Gender.values()) {
+                System.out.println(gender);
+            }
+            register();
         }
-        System.out.println("Input phoneNumber");
-        String phoneNumber = scanner.nextLine();
-        userMap.put(yourPassword, new User(name, surname, Gender.valueOf(myGender), age, phoneNumber, yourPassword));
-        System.out.println("You are registered");
     }
+
 
     private static void showEntryCommands() {
         System.out.println("Please input " + EXIT + " for EXIT");
