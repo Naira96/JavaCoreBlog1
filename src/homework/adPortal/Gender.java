@@ -1,4 +1,4 @@
-package homework.adPortal1;
+package homework.adPortal;
 
 public enum Gender {
     FEMALE,
