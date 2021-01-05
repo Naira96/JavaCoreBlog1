@@ -28,6 +28,7 @@ public class AdPortal implements AdsCommands {
             }
         }
     }
+
     private static void login() {
         List<Advertisement> ads = new LinkedList<>();
         System.out.println("Please input your password and phoneNumber");
@@ -44,7 +45,7 @@ public class AdPortal implements AdsCommands {
                     String commands = scanner.nextLine();
                     switch (commands) {
                         case LOGOUT:
-                            System.exit(0);
+                            login();
                             break;
                         case ADD_NEW_AD:
                             try {
@@ -72,7 +73,7 @@ public class AdPortal implements AdsCommands {
                             break;
                         case PRINT_MY_ALL_ADS:
                             for (Advertisement ad : ads) {
-                                if (userMap.equals(ad.getAuthor())) {
+                                if (ad.getAuthor().equals(userMap.get(phoneNumber))) {
                                     System.out.println(ad);
                                 }
                             }
@@ -92,16 +93,22 @@ public class AdPortal implements AdsCommands {
                             }
                             break;
                         case DELETE_MY_ALL_ADS:
-                            ads.clear();
+                            for (Advertisement ad : ads) {
+                                if (ad.getAuthor().equals(userMap.get(phoneNumber))) {
+                                    ads.remove(ad);
+                                }
+                            }
+                            System.out.println("Your all ads were deleted");
                             break;
                         case DELETE_AD_BY_TITLE:
                             System.out.println("please input title");
                             String title = scanner.nextLine();
                             for (Advertisement ad : ads) {
-                                if (title.equals(ad.getTitle())){
+                                if (title.equals(ad.getTitle())) {
                                     ads.remove(ad);
+                                    System.out.println("Advertisement was deleted");
                                 }
-                            } System.out.println(ads);
+                            }
                             break;
                         default:
                             System.out.println("Wrong command");
@@ -114,11 +121,6 @@ public class AdPortal implements AdsCommands {
         }
     }
 
-    //2 PRINT MY ALL ADS
-//3 PRINT ALL ADS
-//4 PRINT AD BY CATEGORY
-//5 DELETE MY ALL ADS(պետք է ջնջի տվյալ յուզերի բոլոր հայտարարությունները)
-//6 DELETE AD BY TITLE (վերնագիրը կուդանք, կջնջե)
     private static void showCommandsAdPortal() {
         System.out.println("please input " + LOGOUT + " for logout");
         System.out.println("please input " + ADD_NEW_AD + " for ADD_NEW_AD");
