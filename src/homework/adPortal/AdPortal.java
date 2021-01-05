@@ -87,7 +87,7 @@ public class AdPortal implements AdsCommands {
                             String category = scanner.nextLine();
                             for (Advertisement ad : ads) {
                                 if (category.equals(ad.getCategory())) {
-                                    System.out.println(ads);
+                                    System.out.println(ad);
                                 }
                             }
                             break;
@@ -98,12 +98,10 @@ public class AdPortal implements AdsCommands {
                             System.out.println("please input title");
                             String title = scanner.nextLine();
                             for (Advertisement ad : ads) {
-                                System.out.println(ad);
-                                if (ad.getTitle().equals(title)){
-                                    ads.remove(title);
+                                if (title.equals(ad.getTitle())){
+                                    ads.remove(ad);
                                 }
-                                System.out.println(ad);
-                            }
+                            } System.out.println(ads);
                             break;
                         default:
                             System.out.println("Wrong command");
