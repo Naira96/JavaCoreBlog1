@@ -158,8 +158,5 @@ public class AdPortal implements Commands {
         } catch (IllegalArgumentException e) {
             System.out.println("Wrong data");
         }
-
     }
-
-
 }

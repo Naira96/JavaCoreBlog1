@@ -5,6 +5,7 @@ import homework.adPortal.models.Ad;
 import homework.adPortal.models.Category;
 import homework.adPortal.models.User;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -50,9 +51,11 @@ public class AdStorageImpl implements AdStorage {
 
     @Override
     public void deleteAdByTitle(String title, User currentUser) {
-        for (Ad ad : adList) {
+        Iterator<Ad> iterator = adList.iterator();
+        while (iterator.hasNext()) {
+            Ad ad = iterator.next();
             if (ad.getTitle().equals(title) && ad.getUser().equals(currentUser)) {
-                adList.remove(ad);
+                iterator.remove();
             }
         }
     }
