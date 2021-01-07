@@ -1,12 +1,12 @@
-package homework.adPortal;
+package homework.adPortal.models;
 
 public class User {
-    String name;
-    String surname;
-    Gender gender;
-    int age;
-    String phoneNumber;
-    String password;
+    private String name;
+    private String surname;
+    private Gender gender;
+    private int age;
+    private String phoneNumber;
+    private String password;
 
     public User(String name, String surname, Gender gender, int age, String phoneNumber, String password) {
         this.name = name;
@@ -76,7 +76,6 @@ public class User {
                 ", gender=" + gender +
                 ", age=" + age +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", password='" + password + '\'' +
                 '}';
     }
 
