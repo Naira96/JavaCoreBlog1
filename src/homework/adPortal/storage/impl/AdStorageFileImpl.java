@@ -1,16 +1,22 @@
-package homework.adPortal.impl;
+package homework.adPortal.storage.impl;
 
 import homework.adPortal.AdStorage;
 import homework.adPortal.models.Ad;
 import homework.adPortal.models.Category;
 import homework.adPortal.models.User;
+import homework.adPortal.util.FileUtil;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class AdStorageImpl implements AdStorage {
-    private List<Ad> adList = new LinkedList<>();
+public class AdStorageFileImpl implements AdStorage {
+    private List<Ad> adList;
+
+    public AdStorageFileImpl() {
+        adList = FileUtil.deserializeAdList();
+        FileUtil.serializeAdList(adList);
+    }
 
     @Override
     public void add(Ad ad) {
@@ -47,6 +53,7 @@ public class AdStorageImpl implements AdStorage {
                 adList.remove(ad);
             }
         }
+        FileUtil.serializeAdList(adList);
     }
 
     @Override
@@ -58,5 +65,6 @@ public class AdStorageImpl implements AdStorage {
                 iterator.remove();
             }
         }
+        FileUtil.serializeAdList(adList);
     }
 }

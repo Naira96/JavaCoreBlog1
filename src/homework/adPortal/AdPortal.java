@@ -4,18 +4,31 @@ import homework.adPortal.models.Ad;
 import homework.adPortal.models.Category;
 import homework.adPortal.models.Gender;
 import homework.adPortal.models.User;
-import homework.adPortal.impl.AdStorageImpl;
-import homework.adPortal.impl.UserStorageImpl;
+import homework.adPortal.storage.impl.AdStorageFileImpl;
+import homework.adPortal.storage.impl.AdStorageImpl;
+import homework.adPortal.storage.impl.UserStorageFileImpl;
+import homework.adPortal.storage.impl.UserStorageImpl;
 
 import java.util.*;
 
 public class AdPortal implements Commands {
     private static Scanner scanner = new Scanner(System.in);
-    private static AdStorage adStorage = new AdStorageImpl();
-    private static UserStorage userStorage = new UserStorageImpl();
+    private static AdStorage adStorage;
+    private static UserStorage userStorage;
     private static User currentUser = null;
 
     public static void main(String[] args) {
+        System.out.println("Which storage do you want to use?");
+        System.out.println("1 - HEAP[RAM]");
+        System.out.println("2 - FILE[HDD]");
+        int storage = Integer.parseInt(scanner.nextLine());
+        if (storage == 2) {
+            adStorage = new AdStorageFileImpl();
+            userStorage = new UserStorageFileImpl();
+        } else {
+            adStorage = new AdStorageImpl();
+            userStorage = new UserStorageImpl();
+        }
         boolean isRun = true;
         while (isRun) {
             Commands.printMainCommands();

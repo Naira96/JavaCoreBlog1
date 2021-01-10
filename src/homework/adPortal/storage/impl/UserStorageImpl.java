@@ -1,4 +1,4 @@
-package homework.adPortal.impl;
+package homework.adPortal.storage.impl;
 
 import homework.adPortal.UserStorage;
 import homework.adPortal.models.User;
