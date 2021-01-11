@@ -1,21 +1,19 @@
 package homework.blog.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Post {
+public class Post implements Serializable {
     private String title;
     private String text;
-    private String category;
+    private Category category;
     private Date createdDate;
 
-    public Post(String title, String text, String category, Date createdDate) {
+    public Post(String title, String text, Category category, Date createdDate) {
         this.title = title;
         this.text = text;
         this.category = category;
         this.createdDate = createdDate;
-    }
-
-    public Post() {
     }
 
     public String getTitle() {
@@ -34,11 +32,11 @@ public class Post {
         this.text = text;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -51,16 +49,6 @@ public class Post {
     }
 
     @Override
-    public String toString() {
-        return "Post{" +
-                "title='" + title + '\'' +
-                ", text='" + text + '\'' +
-                ", category='" + category + '\'' +
-                ", createdDate=" + createdDate +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -69,7 +57,7 @@ public class Post {
 
         if (title != null ? !title.equals(post.title) : post.title != null) return false;
         if (text != null ? !text.equals(post.text) : post.text != null) return false;
-        if (category != null ? !category.equals(post.category) : post.category != null) return false;
+        if (category != post.category) return false;
         return createdDate != null ? createdDate.equals(post.createdDate) : post.createdDate == null;
     }
 
@@ -80,5 +68,15 @@ public class Post {
         result = 31 * result + (category != null ? category.hashCode() : 0);
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "title='" + title + '\'' +
+                ", text='" + text + '\'' +
+                ", category=" + category +
+                ", createdDate=" + createdDate +
+                '}';
     }
 }

@@ -21,6 +21,7 @@ public class AdStorageFileImpl implements AdStorage {
     @Override
     public void add(Ad ad) {
         adList.add(ad);
+        FileUtil.serializeAdList(adList);
     }
 
     @Override

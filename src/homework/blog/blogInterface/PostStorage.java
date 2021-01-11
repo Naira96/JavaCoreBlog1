@@ -6,11 +6,11 @@ import homework.blog.model.Post;
 public interface PostStorage {
     void add(Post post);
 
-    Post getPostByTitle(String title) throws  PostNotFoundException;
+    Post getPostByTitle(String title) throws PostNotFoundException;
 
     void searchPostsByKeyword(String keyword);
 
     void printAllPosts();
 
-    void printPostsByCategory(String category) throws PostNotFoundException;
+    Post getPostsByCategory(String category) throws PostNotFoundException;
 }

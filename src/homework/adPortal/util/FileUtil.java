@@ -2,6 +2,7 @@ package homework.adPortal.util;
 
 import homework.adPortal.models.Ad;
 import homework.adPortal.models.User;
+import homework.blog.model.Post;
 
 import java.io.*;
 import java.util.HashMap;
@@ -61,5 +62,6 @@ public class FileUtil {
             return new LinkedList<>();
         }
     }
+
 }
 

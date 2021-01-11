@@ -2,21 +2,21 @@ package homework.blog;
 
 import homework.blog.blogInterface.BlogCommands;
 import homework.blog.excaption.PostNotFoundException;
+import homework.blog.model.Category;
 import homework.blog.model.Post;
-import homework.blog.storage.PostStorageImpl;
+import homework.blog.storage.PostStorageFileImpl;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
 public class Blog implements BlogCommands {
-    static PostStorageImpl postStorageImpl = new PostStorageImpl();
-    static Scanner scanner = new Scanner(System.in);
+    private static PostStorageFileImpl postStorageFileImpl = new PostStorageFileImpl();
+    private static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws PostNotFoundException {
+    public static void main(String[] args) {
         boolean isRun = true;
         while (isRun) {
-            showCommand();
+            BlogCommands.showCommand();
             String command = scanner.nextLine();
             switch (command) {
                 case EXIT:
@@ -31,27 +31,15 @@ public class Blog implements BlogCommands {
                 case SEARCH_POST:
                     System.out.println("Please input keyword for SEARCH_POST");
                     String anyKeyword = scanner.nextLine();
-                    postStorageImpl.searchPostsByKeyword(anyKeyword);
+                    postStorageFileImpl.searchPostsByKeyword(anyKeyword);
                     break;
                 case POSTS_BY_CATEGORY:
-                    if (postStorageImpl.isEmpty()) {
-                        System.out.println("Blog is empty.Please add post first");
-                    } else {
-                        System.out.println("Please select category from list");
-                        postStorageImpl.printCategoryList();
-                        String ourCategory = scanner.nextLine();
-                        try {
-                            Post foundPost = postStorageImpl.getByCategory(ourCategory);
-                            System.out.println(foundPost);
-                        } catch (PostNotFoundException e) {
-                            System.out.println(e.getMessage());
-                        }
-                    }
+                    postByCategory();
                     break;
                 case ALL_POSTS:
-                    if (postStorageImpl.isEmpty()) {
+                    if (postStorageFileImpl.isEmpty()) {
                         System.out.println("Blog is empty, please input post first");
-                    } else postStorageImpl.printAllPosts();
+                    } else postStorageFileImpl.printAllPosts();
                     break;
                 default:
                     System.out.println("Wrong command!");
@@ -60,11 +48,31 @@ public class Blog implements BlogCommands {
 
     }
 
+    private static void postByCategory() {
+        if (postStorageFileImpl.isEmpty()) {
+            System.out.println("Blog is empty.Please add post first");
+        } else {
+            System.out.println("Please select category from list");
+            for (Category value : Category.values()) {
+                System.out.println(value);
+            }
+            try {
+                Post postsByCategory = postStorageFileImpl.getPostsByCategory(scanner.nextLine());
+                if (postsByCategory == null) {
+                    System.out.println("do not exist");
+                } else System.out.println(postsByCategory);
+            } catch (IllegalArgumentException e) {
+                System.out.println("wrong category");
+
+            }
+        }
+    }
+
     private static void searchByTitle() {
         System.out.println("Please input title for search post");
         String searchTitle = scanner.nextLine();
         try {
-            Post postByTitle = postStorageImpl.getPostByTitle(searchTitle);
+            Post postByTitle = postStorageFileImpl.getPostByTitle(searchTitle);
             System.out.println(postByTitle);
         } catch (PostNotFoundException e) {
             System.out.println(e.getMessage());
@@ -73,23 +81,21 @@ public class Blog implements BlogCommands {
 
     private static void addPost() {
         System.out.println("Please input title, text, category for ADD_POST");
-        String title = scanner.nextLine();
-        String text = scanner.nextLine();
-        String category = scanner.nextLine();
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        Post post = new Post(title, text, category, date);
-        postStorageImpl.add(post);
-        System.out.println(post);
-        System.out.println("Post was added");
-    }
-
-    private static void showCommand() {
-        System.out.println("Please input " + EXIT + " for EXIT");
-        System.out.println("Please input " + ADD_POST + " for ADD_POST");
-        System.out.println("Please input " + SEARCH_BY_TITLE + " for SEARCH_BY_TITLE");
-        System.out.println("Please input " + SEARCH_POST + " for SEARCH_POST");
-        System.out.println("Please input " + POSTS_BY_CATEGORY + " for print POSTS_BY_CATEGORY");
-        System.out.println("Please input " + ALL_POSTS + " for print ALL_POSTS");
+        System.out.println("Here is category list");
+        for (Category value : Category.values()) {
+            System.out.println(value);
+        }
+        String postData = scanner.nextLine();
+        try {
+            String[] postDataArr = postData.split(",");
+            Post post = new Post(postDataArr[0], postDataArr[1], Category.valueOf(postDataArr[2].toUpperCase()),
+                    new Date());
+            postStorageFileImpl.add(post);
+            System.out.println("Post was added");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Invalid data");
+        } catch (IllegalArgumentException e) {
+            System.out.println("wrong category");
+        }
     }
 }
